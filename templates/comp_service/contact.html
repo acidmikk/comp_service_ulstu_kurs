@@ -1,0 +1,39 @@
+{% extends "comp_service/layout/base.html" %}
+{% load static %}
+{% block title %}УлКомп | Контакты{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Контакты</h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Адрес:</h4>
+                <div class="adress"><i class="fa fa-map-marker" aria-hidden="true"></i> г. Ульяновск пр-т Ульяновский, д 13, 432072</div>
+
+                <h4>Электронная почта:</h4>
+                <a href="mailto:sevabasharin@mail.ru" class="email"><i class="fa fa-envelope" aria-hidden="true"></i>sevabasharin@mail.ru</a>
+
+                <h4>Телефон:</h4>
+                <a href="tel:+79121231212" class="phone"> <i class="fa fa-phone" aria-hidden="true"></i>+7 (912) 123-12-12</a>
+
+                <h4>Интерактивная карта:</h4>
+                <div style="position:relative;overflow:hidden;">
+                    <a href="https://yandex.ru/maps/195/ulyanovsk/?utm_medium=mapframe&utm_source=maps"
+                       style="color:#eee;font-size:12px;position:absolute;top:0px;">Ульяновск</a>
+                    <a href="https://yandex.ru/maps/195/ulyanovsk/house/ulyanovskiy_prospekt_13/YEEYcwBnSEADQFtufX92d31iZQ==/?indoorLevel=1&ll=48.578102%2C54.375834&utm_medium=mapframe&utm_source=maps&z=18.8"
+                       style="color:#eee;font-size:12px;position:absolute;top:14px;">Ульяновский проспект, 13 — Яндекс Карты</a>
+                    <iframe src="https://yandex.ru/map-widget/v1/?indoorLevel=1&ll=48.578102%2C54.375834&mode=whatshere&whatshere%5Bpoint%5D=48.577039%2C54.376798&whatshere%5Bzoom%5D=17&z=18.8" width="500" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Форма обратной связи:</h4>
+                <form method="post" class="form-contact form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

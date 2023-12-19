@@ -1,0 +1,25 @@
+{% extends "comp_service/layout/base.html" %}
+{% load static %}
+{% block title %}УлКомп | Авторизация{% endblock %}
+{% block content %}
+    <div class="authorization">
+    <div class="container" id="regist">
+        <div class="push50"></div>
+        <div class="auto-wrapper">
+            <div class="rf">
+                <form method="post" name="login">
+                    <h2>Авторизация</h2>
+                    <div class="push30"></div>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div>
+                        <input type="submit" class="button btn" value="Войти" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="push50"></div>
+    </div>
+</div>
+{% endblock %}

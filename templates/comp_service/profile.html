@@ -1,0 +1,28 @@
+{% extends "comp_service/layout/base.html" %}
+{% load static %}
+{% block title %}УлКомп | Профиль{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Ваши заказы</h1>
+
+        {% for order in orders %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <a class="advance-link" href="{% url 'main:main' %}">Заказ #{{ order.order_number }}</a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Дата заказа: {{ order.order_date }}</h5>
+                    <p class="card-text">
+                        Услуги в заказе:
+                        <ul>
+                            {% for service in order.services.all %}
+                                <li>{{ service.title }} - {{ service.cost }} рублей</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                    <p class="card-text">Сумма заказа: {{ order.total_cost }} рублей</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

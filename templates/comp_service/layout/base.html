@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <title>{{title}}</title>
+    </head>
+        <body>
+            <header>
+                    <nav class="navbar navbar-light bg-light display:flex justify-content:space-between">
+                        <div class="d-flex">
+                            <a class="navbar-brand" href="{% url 'main:main' %}">УлКомп</a>
+                            <a class="navbar-brand" href="{% url 'main:services' %}">Услуги</a>
+                            <a class="navbar-brand" href="{% url 'main:about' %}">О нас</a>
+                            <a class="navbar-brand" href="{% url 'main:contact' %}">Контакты</a>
+                            <a class="navbar-brand" href="{% url 'main:photo' %}">Галерея</a>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="d-flex">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle relative" id="navbarDropdown" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                           style="position: relative">
+                                            {{ user.username }}
+                                        </a>
+                                        <div class="dropdown-menu" style="position: absolute;right:0;left:auto !important" aria-labelledby="navbarDropdown">
+                                            {% if user.is_staff %}
+                                                <a class="dropdown-item" href="{% url 'admin:index' %}">Админка</a>
+                                            {% endif %}
+                                            <a class="dropdown-item" href="{% url 'main:profile' user.username %}">Профиль</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{% url 'main:logout' %}">Выход</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a class="navbar-brand" href="{% url 'main:login' %}">Вход</a>
+                        {% endif %}
+                    </nav>
+            </header>
+            {% if messages %}
+                <div class="messages">
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+            <!-- Begin page content -->
+            <main role="main" class="container">
+                {% block content %}{% endblock %}
+            </main>
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </body>
+</html>
