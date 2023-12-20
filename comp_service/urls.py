@@ -5,7 +5,10 @@ app_name = 'main'
 
 urlpatterns = [
     path('', main, name='main'),
-    path('services/', ServiceListView.as_view(), name='services'),
+    path('services/', include([
+        path('', ServiceListView.as_view(), name='services'),
+        path('<slug:slug>/', ServiceDetailView.as_view(), name='service_detail'),
+    ])),
     path('photo/', PhotosList.as_view(), name='photo'),
     path('about/', about, name='about'),
     path('contact/', contact_view, name='contact'),

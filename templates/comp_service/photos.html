@@ -3,37 +3,37 @@
 {% block title %}УлКомп | Фото{% endblock %}
 {% block content %}
     <div class="container mt-5">
-        <h1 class="mb-4">Галерея</h1>
+            <h1 class="mb-4">Галерея</h1>
 
-        <div class="row">
-            {% for photo in object_list %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ photo.title }}</h5>
+            <div class="row">
+                {% for photo in object_list %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ photo.title }}</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
 
-        <div class="pagination justify-content-center">
-            <span class="step-links">
-                {% if object_list.has_previous %}
-                    <a href="?page=1">&laquo; первая</a>
-                    <a href="?page={{ object_list.previous_page_number }}">предыдущая</a>
-                {% endif %}
+            <div class="pagination justify-content-center">
+                <span class="step-links">
+                    {% if object_list.has_previous %}
+                        <a href="?page=1">&laquo; первая</a>
+                        <a href="?page={{ object_list.previous_page_number }}">предыдущая</a>
+                    {% endif %}
 
-                <span class="current">
-                    Страница {{ object_list.number }} из {{ object_list.paginator.num_pages }}.
+                    <span class="current">
+                        Страница {{ object_list.number }} из {{ object_list.paginator.num_pages }}.
+                    </span>
+
+                    {% if object_list.has_next %}
+                        <a href="?page={{ object_list.next_page_number }}">следующая</a>
+                        <a href="?page={{ object_list.paginator.num_pages }}">последняя &raquo;</a>
+                    {% endif %}
                 </span>
-
-                {% if object_list.has_next %}
-                    <a href="?page={{ object_list.next_page_number }}">следующая</a>
-                    <a href="?page={{ object_list.paginator.num_pages }}">последняя &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
+            </div>
     </div>
 {% endblock %}

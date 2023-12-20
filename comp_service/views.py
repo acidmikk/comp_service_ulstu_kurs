@@ -8,9 +8,10 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import *
 from .forms import ContactForm, LoginUserForm
@@ -21,13 +22,12 @@ from .forms import ContactForm, LoginUserForm
 
 class PhotosList(ListView):
     model = Photo
-    queryset = Photo.objects.all()
     template_name = 'comp_service/photos.html'
-    paginate_by = 12
-    context_object_name = 'photo'
+    paginate_by = 5
+    context_object_name = 'photos'
 
     def get_queryset(self):
-        return Photo.objects.all().order_by('-created_at')
+        return Photo.objects.all().order_by('-published')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -48,8 +48,7 @@ class PhotosList(ListView):
 
 
 def main(request):
-    context = {}
-    return render(request, 'comp_service/main.html', context)
+    return render(request, 'comp_service/main.html')
 
 
 def about(request):
@@ -72,6 +71,12 @@ class ServiceListView(ListView):
     model = Service
     template_name = 'comp_service/services.html'
     context_object_name = 'services'
+
+
+class ServiceDetailView(DetailView):
+    model = Service
+    template_name = 'comp_service/service_detail.html'
+    context_object_name = 'service'
 
 
 def contact_view(request):
@@ -105,19 +110,39 @@ class LoginUser(LoginView):
         return reverse_lazy('main:main')
 
 
+@login_required
 def logout_user(request):
     logout(request)
-    return redirect('main:login')
+    return redirect('main:main')
 
 
-def order_detail(request, order_id):
+@login_required
+def order_detail(request, username, order_id):
     order = get_object_or_404(Order, id=order_id)
-    return render(request, 'comp_service/order_detail.html', {'order': order})
+    # Проверяем доступ к заказу
+    if not can_view_order(request.user, order):
+        # Обработка случая, когда доступ запрещен
+        return redirect('main:main')
+    return render(request, 'comp_service/order_detail.html', {'order': order,
+                                                              'username': username})
 
 
 @login_required
 def profile(request, username):
-    context = {'user': User.objects.get(username=username),
+    profile_user = User.objects.get(username=username)
+    context = {'user': profile_user,
                'orders': Order.objects.filter(user=request.user)}
+    if not can_view_profile(request.user, profile_user):
+        # Обработка случая, когда доступ запрещен
+        return redirect('main:main')
     return render(request, 'comp_service/profile.html', context)
+
+
+def can_view_order(user, order):
+    return user.is_authenticated and (user == order.user or user.is_staff)
+
+
+def can_view_profile(user, profile_user):
+    return user.is_authenticated and (user == profile_user or user.is_staff)
+
 

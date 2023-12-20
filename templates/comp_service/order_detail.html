@@ -3,11 +3,11 @@
 {% block title %}УлКомп | Детали заказа{% endblock %}
 {% block content %}
     <div class="container mt-5">
-    <h1 class="mb-4">Детали заказа #{{ order.order_number }}</h1>
+    <h1 class="mb-4">Детали заказа #{{ order.pk }}</h1>
 
     <div class="card mb-3">
         <div class="card-header">
-            Заказ #{{ order.order_number }}
+            Заказ #{{ order.pk }}
         </div>
         <div class="card-body">
             <h5 class="card-title">Дата заказа: {{ order.order_date }}</h5>
@@ -16,10 +16,10 @@
                 <ul>
                     {% for service in order.services.all %}
                         <li>{{ service.title }} - {{ service.cost }} рублей</li>
-                        <li>{{ order.status }}</li>
                     {% endfor %}
                 </ul>
             </p>
+            <p class="card-text">Статус заказа: {{ order.get_status_display }}</p>
             <p class="card-text">Сумма заказа: {{ order.total_cost }} рублей</p>
             {% if order.check_file %}
                 <p class="card-text">
@@ -29,6 +29,6 @@
         </div>
     </div>
 
-    <a href="{% url 'user_orders' %}" class="btn btn-secondary">Назад к заказам</a>
+    <a href="{% url 'main:profile' username=username %}" class="btn btn-secondary">Назад к заказам</a>
 </div>
 {% endblock %}

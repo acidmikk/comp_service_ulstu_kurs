@@ -1,0 +1,8 @@
+{% extends "comp_service/layout/base.html" %}
+{% load static %}
+{% block title %}УлКомп | {{ service.title }}{% endblock %}
+{% block content %}
+    <h1>{{ service.title }}</h1>
+    <p>{{ service.description }}</p>
+    <p>Стоимость: {{ service.cost }} рублей</p>
+{% endblock %}

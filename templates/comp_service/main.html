@@ -4,31 +4,31 @@
 {% block content %}
     <div class="container mt-4">
         <div class="jumbotron">
-            <h1 class="display-4">Добро пожаловать в ваш компьютерный сервис</h1>
+            <h1 class="display-4">Добро пожаловать в наш компьютерный сервис</h1>
             <p class="lead">Мы здесь, чтобы вам помочь с вашими компьютерными потребностями.</p>
             <hr class="my-4">
             <p>Мы предоставляем качественные услуги по обслуживанию и ремонту компьютеров.</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Узнать больше</a>
+            <a class="btn btn-primary btn-lg" href="{% url 'main:about' %}" role="button">Узнать больше</a>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Услуга 1">
-                <div class="card-body">
-                    <h5 class="card-title">Услуга 1</h5>
-                    <p class="card-text">Описание услуги 1. Здесь вы можете описать, что включает в себя эта услуга.</p>
-                    <a href="#" class="btn btn-primary">Подробнее</a>
+            <div class="card mb-4 d-flex flex-column h-100">
+                <img src="{% static 'comp_service/img/install_win.jpg' %}" class="card-img-top" alt="Услуга 1">
+                <div class="card-body flex-fill">
+                    <h5 class="card-title">Установка Windows</h5>
+                    <p class="card-text">Профессиональная установка, настройка и активация операционной системы Windows.</p>
+                    <a href="{% url 'main:service_detail' slug='ustanovka-windows' %}" class="btn btn-primary mt-auto">Подробнее</a>
                 </div>
             </div>
         </div>
         <div class="col-md-5">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Услуга 2">
-                <div class="card-body">
-                    <h5 class="card-title">Услуга 2</h5>
-                    <p class="card-text">Описание услуги 2. Здесь вы можете описать, что включает в себя эта услуга.</p>
-                    <a href="#" class="btn btn-primary">Подробнее</a>
+            <div class="card mb-4 d-flex flex-column h-100">
+                <img src="{% static 'comp_service/img/XXL.jpg' %}" class="card-img-top" alt="Услуга 2">
+                <div class="card-body flex-fill">
+                    <h5 class="card-title">Ремонт ПК</h5>
+                    <p class="card-text">Комплексный ремонт и обслуживание компьютеров. Быстрая диагностика и устранение аппаратных и программных сбоев для восстановления полной функциональности ПК.</p>
+                    <a href="{% url 'main:service_detail' slug='remont-pk' %}" class="btn btn-primary mt-auto">Подробнее</a>
                 </div>
             </div>
         </div>
